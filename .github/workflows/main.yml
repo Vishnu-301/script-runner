@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       command:
-        description: "Shell command(s) to run (separate multiple with ;;)"
+        description: "Shell command(s) to run (separate multiple with &&)"
         required: true
         type: string
 

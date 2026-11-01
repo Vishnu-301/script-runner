@@ -10,19 +10,15 @@ function run(command: string): number {
 
 async function inputLoop() {
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-    console.log('\nEnter a command to run. Use ";;" to run several. Type "exit" to quit.');
+    console.log('\nEnter a command to run. Chain several with "&&". Type "exit" to quit.');
 
     while (true) {
         const answer = (await rl.question("$ ")).trim();
         if (!answer) continue;
         if (answer === "exit") break;
 
-        if (answer) {
-            for (const cmd of answer.split(/\n|;;/).map((c) => c.trim()).filter(Boolean)) {
-                const code = run(cmd);
-                if (code !== 0) process.exit(code);
-            }
-        }
+        const code = run(answer);
+        if (code !== 0) console.error(`Command exited with code ${code}`);
     }
     rl.close();
 }
@@ -32,13 +28,9 @@ async function main() {
     if (!process.stdin.isTTY) {
         const command = process.env.COMMAND?.trim();
         if (command) {
-            for (const cmd of command.split("\n").map((c) => c.trim()).filter(Boolean)) {
-                const code = run(cmd);
-                if (code !== 0) process.exit(code);
-            }
-        } else {
-            console.log("No COMMAND provided, nothing more to run.");
+            process.exit(run(command));
         }
+        console.log("No COMMAND provided, nothing more to run.");
         return;
     }
 
