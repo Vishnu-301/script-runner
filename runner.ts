@@ -10,7 +10,7 @@ function run(command: string): number {
 
 async function inputLoop() {
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-    console.log('\nEnter a command to run. Use "&&" to run several. Type "exit" to quit.');
+    console.log('\nEnter a command to run. Use ";;" to run several. Type "exit" to quit.');
 
     while (true) {
         const answer = (await rl.question("$ ")).trim();
@@ -18,7 +18,7 @@ async function inputLoop() {
         if (answer === "exit") break;
 
         if (answer) {
-            for (const cmd of answer.split(/\n|&&/).map((c) => c.trim()).filter(Boolean)) {
+            for (const cmd of answer.split(/\n|;;/).map((c) => c.trim()).filter(Boolean)) {
                 const code = run(cmd);
                 if (code !== 0) process.exit(code);
             }
