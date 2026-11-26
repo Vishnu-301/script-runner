@@ -1,45 +1,39 @@
-# SCRIPT RUNNER
+# Script Runner
 
-run custom terminal commands from your workflow form any location at any time
+<p align="center">
+  <img src="./image/Gemini_Generated_Image_mv6tfsmv6tfsmv6t.jpg" alt="Script Runner — execute scripts, automate tasks, simplify DevOps" width="100%">
+</p>
 
-## set-up
+Run terminal commands interactively or provide a command through an environment variable for automation.
+
+## Getting started
 
 ```bash
 git clone https://github.com/Vishnu-301/script-runner.git
-```
-
-```bash
 cd script-runner
+npm install
 ```
+
+## Run interactively
+
+Start the runner and enter a command at the prompt. Chain commands with `&&`, and type `exit` to quit.
+
 ```bash
-npm install # install dependencies
+npm start
 ```
 
-## configure terminal command you want to run
-
-```typescript
-import { execSync } from "node:child_process";
-
-function run(command: string) {
-
-    console.log( `> ${command}` );
-    execSync(command, { stdio: "inherit" });
-
-}
-```
-
-``` typescript
-run("<your terminal command>")
-```
-
-## run script
+You can also run it directly:
 
 ```bash
 npx tsx runner.ts
 ```
 
-OR
+## Run a command non-interactively
+
+Set `COMMAND` to the terminal command you want to run:
 
 ```bash
-npm run start
+COMMAND="echo Hello from Script Runner" npm start
 ```
+
+This mode is suitable for automation workflows such as GitHub Actions.
